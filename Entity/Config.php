@@ -1,6 +1,6 @@
 <?php
 
-namespace Plugin\TPS\Entity;
+namespace Plugin\TPSChatbotAI\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Config
  *
  * @ORM\Table(name="plg_tps_config")
- * @ORM\Entity(repositoryClass="Plugin\TPS\Repository\ConfigRepository")
+ * @ORM\Entity(repositoryClass="Plugin\TPSChatbotAI\Repository\ConfigRepository")
  */
 class Config
 {

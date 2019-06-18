@@ -1,12 +1,12 @@
 {
-  "name": "ec-cube/TPS",
+  "name": "TPS/TPSChatbotAI",
   "version": "1.0.0",
-  "description": "TPS",
+  "description": "TPSChatbotAI",
   "type": "eccube-plugin",
   "require": {
     "ec-cube/plugin-installer": "~0.0.7"
   },
   "extra": {
-    "code": "TPS"
+    "code": "TPSChatbotAI"
   }
 }

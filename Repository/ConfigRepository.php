@@ -1,9 +1,9 @@
 <?php
 
-namespace Plugin\TPS\Repository;
+namespace Plugin\TPSChatbotAI\Repository;
 
 use Eccube\Repository\AbstractRepository;
-use Plugin\TPS\Entity\Config;
+use Plugin\TPSChatbotAI\Entity\Config;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
