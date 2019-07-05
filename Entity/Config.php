@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Config
  *
- * @ORM\Table(name="plg_tps_config")
+ * @ORM\Table(name="plg_tpschatbotai_config")
  * @ORM\Entity(repositoryClass="Plugin\TPSChatbotAI\Repository\ConfigRepository")
  */
 class Config
@@ -22,11 +22,9 @@ class Config
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="uid", type="string")
      */
-    private $name;
+    private $uid;
 
     /**
      * @return int
@@ -37,21 +35,21 @@ class Config
     }
 
     /**
-     * @return string
-     */
-    public function getName()
+     * Get the value of uid
+     */ 
+    public function getUid()
     {
-        return $this->name;
+        return $this->uid;
     }
 
     /**
-     * @param string $name
+     * Set the value of uid
      *
-     * @return $this;
-     */
-    public function setName($name)
+     * @return  self
+     */ 
+    public function setUid($uid)
     {
-        $this->name = $name;
+        $this->uid = $uid;
 
         return $this;
     }

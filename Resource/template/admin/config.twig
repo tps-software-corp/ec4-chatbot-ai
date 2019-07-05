@@ -2,14 +2,34 @@
 
 {% set menus = ['store', 'plugin', 'plugin_list'] %}
 
-{% block title %}TPSChatbotAI{% endblock %}
-{% block sub_title %}プラグイン一覧{% endblock %}
+{% block title %}Chatbot AI{% endblock %}
+{% block sub_title %}{% endblock %}
 
 {% form_theme form '@admin/Form/bootstrap_4_horizontal_layout.html.twig' %}
 
 {% block stylesheet %}{% endblock stylesheet %}
 
-{% block javascript %}{% endblock javascript %}
+{% block javascript %}
+<script>
+$(function() {
+    var REGISTER_API = 'http://192.168.50.109:8088/api/merchant/register';
+    var GENERATE_ID_API = 'http://192.168.50.109:8088/api/generate_id';
+    $('#btn-register').click(function() {
+        $.get(GENERATE_ID_API, function(res) {
+            $('#config_uid').val(res.merchant_id);
+            var data =  {
+                m_id:  $('#config_uid').val(),
+                m_name: '{{BaseInfo.shop_name}}',
+                m_type: 'sneaker_store',
+                m_email: '{{BaseInfo.email02}}',
+            }
+            $.post(REGISTER_API, data, function() {
+            })
+        })
+    })
+})
+</script>
+{% endblock javascript %}
 
 {% block main %}
     <form role="form" method="post">
@@ -20,14 +40,18 @@
             <div class="c-contentsArea__primaryCol">
                 <div class="c-primaryCol">
                     <div class="card rounded border-0 mb-4">
-                        <div class="card-header"><span>設定</span></div>
+                        <div class="card-header"><span>{{'admin.setting' | trans}}</span></div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-3"><span>名前</span><span
-                                            class="badge badge-primary ml-1">必須</span></div>
-                                <div class="col mb-2">
-                                    {{ form_widget(form.name) }}
-                                    {{ form_errors(form.name) }}
+                                <div class="col-2"><span>{{'chatbotai.uid' | trans}}</span><span
+                                            class="badge badge-primary ml-1">{{'common.required' | trans}}</span></div>
+                                <div class="col-9 mb-2">
+                                    {{ form_widget(form.uid) }}
+                                    {{ form_errors(form.uid) }}
+                                    <div class="text-muted">{{'chatbotai.uid_description' | trans}}</div>
+                                </div>
+                                <div class="col-1 mb-2">
+                                    <button id="btn-register" type="button" class="btn btn-primary">{{'chatbotai.register' | trans}}</button>
                                 </div>
                             </div>
                         </div>
@@ -43,7 +67,7 @@
                             <a class="c-baseLink"
                                href="{{ url('admin_store_plugin') }}">
                                 <i class="fa fa-backward" aria-hidden="true"></i>
-                                <span>プラグイン一覧</span>
+                                <span>{{'admin.store.plugin.plugin_list' | trans}}</span>
                             </a>
                         </div>
                     </div>
@@ -51,7 +75,7 @@
                         <div class="row align-items-center justify-content-end">
                             <div class="col-auto">
                                 <button class="btn btn-ec-conversion px-5"
-                                        type="submit">登録</button>
+                                        type="submit">{{'admin.common.save' | trans}}</button>
                             </div>
                         </div>
                     </div>

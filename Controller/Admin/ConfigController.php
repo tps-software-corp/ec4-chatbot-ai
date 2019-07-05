@@ -40,13 +40,26 @@ class ConfigController extends AbstractController
             $Config = $form->getData();
             $this->entityManager->persist($Config);
             $this->entityManager->flush($Config);
-            $this->addSuccess('登録しました。', 'admin');
+            $this->addSuccess('admin.common.save_complete', 'admin');
 
-            return $this->redirectToRoute('tps_admin_config');
+            return $this->redirectToRoute('tps_chatbot_ai_admin_config');
         }
 
         return [
             'form' => $form->createView(),
         ];
     }
+
+    /**
+     * 
+     * BACKEND
+     * 
+     * Register business: Sneaker/Shose, Fashion, Cosmsetic -> Response ID -> Reuse
+     *  -> Send data
+     *  -> Send data as schedule
+     *      -> ID, Name, Color, Brand, Size, Price
+     * Action after finish conversation: Create order: COD, Card -> move
+     * 
+     * 
+     */
 }
