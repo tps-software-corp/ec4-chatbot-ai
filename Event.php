@@ -6,6 +6,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Eccube\Event\EccubeEvents;
 use Eccube\Event\TemplateEvent;
 use Eccube\Event\EventArgs;
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Events;
 
 class Event implements EventSubscriberInterface
 {
@@ -15,7 +17,9 @@ class Event implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'index.twig' => 'onDefaultFrameReady'
+            'index.twig' => 'onDefaultFrameReady',
+            'Product/list.twig' => 'onDefaultFrameReady',
+            'Product/detail.twig' => 'onDefaultFrameReady',
         ];
     }
 
