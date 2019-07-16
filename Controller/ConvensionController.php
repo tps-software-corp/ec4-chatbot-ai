@@ -20,6 +20,7 @@ use Eccube\Service\MailService;
 use Eccube\Service\OrderHelper;
 use Eccube\Repository\ProductRepository;
 use Eccube\Repository\ProductClassRepository;
+use Eccube\Repository\ClassNameRepository;
 use Eccube\Repository\Master\PrefRepository;
 use Eccube\Service\PurchaseFlow\PurchaseContext;
 use Eccube\Service\PurchaseFlow\PurchaseFlow;
@@ -47,10 +48,11 @@ class ConvensionController extends CartController
     public function __construct(ConfigRepository $configRepository
     , ConvensionService $convensionService
     , ProductRepository $productRepository
-    , ProductRepository $productClassRepository
+    , ProductClassRepository $productClassRepository
     , PrefRepository $prefRepository
     , OrderHelper $orderHelper
     , MailService $mailService
+    , ClassNameRepository $classNameRepository
     , CartService $cartService
     , PurchaseFlow $cartPurchaseFlow
     , TPSChatbotAIProductRepository $TPSChatbotAIProductRepository
@@ -65,6 +67,7 @@ class ConvensionController extends CartController
         $this->orderHelper = $orderHelper;
         $this->productRepository = $productRepository;
         $this->productClassRepository = $productClassRepository;
+        $this->classNameRepository = $classNameRepository;
         $this->prefRepository = $prefRepository;
         $this->client = new \GuzzleHttp\Client([
             'headers' => [
@@ -96,6 +99,25 @@ class ConvensionController extends CartController
             }
         }
         die;
+    }
+
+    /**
+     * @Route("/tps_chatbot_ai/data/{uid}", name="tps_chatbot_ai_data", methods={"GET"})
+     */
+    public function provideStoreData(Request $request)
+    {
+        $config = $this->configRepository->findOneBy(['uid' => $request->get('uid')]);
+        if ($config) {
+            $data = [];
+            $className = $this->classNameRepository->findAll();
+            foreach($className as $class) {
+                foreach($class->getClassCategories() as $name) {
+                    $data[$class->getBackendName()][] = $name->getBackendName();
+                }
+            }
+            return $this->json($data);
+        }
+        throw $this->createNotFoundException('Your uid key is not valid in our system');
     }
 
     /**
